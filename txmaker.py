@@ -43,6 +43,6 @@ print 'Transactions:\n'
 for i in xrange(1,L[0]+1):
   L.append(random.uniform(args.lower,args.upper)*args.multiplier)
   print args.daemon + ' sendtoaddress ' + args.addresses[i%cantAdds] + ' ' + '%.8f' % L[i] + ' \"' + args.prefix + ' ' + str(i) + '\"'
-total = sum(L[1:len(L)-1])
+total = sum(L[1:len(L)])
 print '\nTotal amount: ' + str(total)
 print 'Total amount+fees: ' + str(total+fees)
