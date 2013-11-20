@@ -25,6 +25,7 @@ parser.add_argument("-l", "--lower", help="lower random number", type=float, def
 parser.add_argument("-u", "--upper", help="upper random number", type=float, default='2.0')
 parser.add_argument("-m", "--multiplier", help="Multiplier for random", type=int, default='1000')
 parser.add_argument('-d', '--daemon', help='coin daemon name', default='coind')
+parser.add_argument('-o', '--onlyamounts', help='output only the amounts of each transaction without the transaction command or details', action='store_true', default=False)
 args = parser.parse_args()
 cantAdds = len(args.addresses)
 if (args.count):
@@ -42,7 +43,10 @@ print 'Aprox txfees: ' + str(fees)
 print 'Transactions:\n'
 for i in xrange(1,L[0]+1):
   L.append(random.uniform(args.lower,args.upper)*args.multiplier)
-  print args.daemon + ' sendtoaddress ' + args.addresses[i%cantAdds] + ' ' + '%.8f' % L[i] + ' \"' + args.prefix + ' ' + str(i) + '\"'
+  if (args.onlyamounts):
+    print '%.8f' % L[i]
+  else:
+    print args.daemon + ' sendtoaddress ' + args.addresses[i%cantAdds] + ' ' + '%.8f' % L[i] + ' \"' + args.prefix + ' ' + str(i) + '\"'
 total = sum(L[1:len(L)])
 print '\nTotal amount: ' + str(total)
 print 'Total amount+fees: ' + str(total+fees)
